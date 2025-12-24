@@ -1,0 +1,118 @@
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.min.css">
+<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
+
+{# PRZYCISK #}
+<div class="mb-3">
+	<button type="button" id="button-add-gradient" class="btn btn-primary">
+		<i class="fa fa-plus"></i> {{ entry_add_gradient }}
+	</button>
+</div>
+
+<div id="gradients">
+	{% set gradient_row = 0 %}
+
+	{% for gradient in gradients %}
+		<div class="card mb-3 gradient-item" data-gradient-row="{{ gradient_row }}">
+			<div class="card-header d-flex justify-content-between align-items-center">
+				<strong>Gradient {{ gradient_row + 1 }}</strong>
+				<button type="button" class="btn btn-danger btn-sm button-remove-gradient">
+					<i class="fa fa-trash"></i>
+				</button>
+			</div>
+
+			<div class="card-body">
+				<div class="row mb-3">
+					<label class="col-sm-2 col-form-label">{{ entry_color_a }}</label>
+					<div class="col-sm-4">
+						<input
+							type="color"
+							class="form-control form-control-color"
+							name="gradients[{{ gradient_row }}][color_a]"
+							value="{{ gradient.color_a }}"
+						/>
+					</div>
+
+					<label class="col-sm-2 col-form-label">{{ entry_color_b }}</label>
+					<div class="col-sm-4">
+						<input
+							type="color"
+							class="form-control form-control-color"
+							name="gradients[{{ gradient_row }}][color_b]"
+							value="{{ gradient.color_b }}"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{% set gradient_row = gradient_row + 1 %}
+	{% endfor %}
+</div>
+
+<input type="hidden" id="gradient-row" value="{{ gradients|length }}">
+
+<script>
+    $(document).ready(function () {
+
+        initGradientSortable();
+
+        $('#button-add-gradient').on('click', function () {
+
+            let row = parseInt($('#gradient-row').val(), 10);
+            let html = '';
+
+            html += '<div class="card mb-3 gradient-item" data-gradient-row="' + row + '">';
+            html += '<div class="card-header d-flex justify-content-between align-items-center">';
+            html += '<strong>Gradient ' + (row + 1) + '</strong>';
+            html += '<button type="button" class="btn btn-danger btn-sm button-remove-gradient">';
+            html += '<i class="fa fa-trash"></i>';
+            html += '</button>';
+            html += '</div>';
+
+            html += '<div class="card-body">';
+            html += '<div class="row mb-3">';
+
+            html += '<label class="col-sm-2 col-form-label">{{ entry_color_a }}</label>';
+            html += '<div class="col-sm-4">';
+            html += '<input type="color" class="form-control form-control-color" ';
+            html += 'name="gradients[' + row + '][color_a]" value="#000000">';
+            html += '</div>';
+
+            html += '<label class="col-sm-2 col-form-label">{{ entry_color_b }}</label>';
+            html += '<div class="col-sm-4">';
+            html += '<input type="color" class="form-control form-control-color" ';
+            html += 'name="gradients[' + row + '][color_b]" value="#ffffff">';
+            html += '</div>';
+
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+
+            $('#gradients').append(html);
+            $('#gradient-row').val(row + 1);
+
+            initGradientSortable();
+        });
+
+        $(document).on('click', '.button-remove-gradient', function () {
+            $(this).closest('.gradient-item').remove();
+        });
+    });
+
+    function initGradientSortable() {
+        $('#gradients').sortable({
+            handle: '.card-header',
+            items: '.gradient-item',
+            cursor: 'move',
+            axis: 'y',
+            tolerance: 'pointer',
+            placeholder: 'gradient-placeholder',
+            start: function (e, ui) {
+                ui.placeholder.height(ui.item.outerHeight());
+            }
+        });
+    }
+</script>
+
+

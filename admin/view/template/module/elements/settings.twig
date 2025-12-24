@@ -1,0 +1,90 @@
+<div class="row mb-3">
+	<label class="col-sm-2 col-form-label">{{ entry_button_bg }}</label>
+	<div class="col-sm-10">
+		<input type="color"
+			   name="button_bg"
+			   value="{{ button_bg }}"
+			   class="form-control form-control-color">
+	</div>
+</div>
+
+<div class="row mb-3">
+	<label class="col-sm-2 col-form-label">{{ entry_button_bg_hover }}</label>
+	<div class="col-sm-10">
+		<input type="color"
+			   name="button_bg_hover"
+			   value="{{ button_bg_hover }}"
+			   class="form-control form-control-color">
+	</div>
+</div>
+
+<div class="row mb-3">
+	<label class="col-sm-2 col-form-label">{{ entry_button_text_color }}</label>
+	<div class="col-sm-10">
+		<input type="color"
+			   name="button_text_color"
+			   value="{{ button_text_color }}"
+			   class="form-control form-control-color">
+	</div>
+</div>
+
+<div class="row mb-3">
+	<label class="col-sm-2 col-form-label">{{ entry_button_text_color_hover }}</label>
+	<div class="col-sm-10">
+		<input type="color"
+			   name="button_text_color_hover"
+			   value="{{ button_text_color_hover }}"
+			   class="form-control form-control-color">
+	</div>
+</div>
+
+<div class="row mb-3">
+	<label class="col-sm-2 col-form-label">{{ entry_heading_color }}</label>
+	<div class="col-sm-10">
+		<input type="color"
+			   name="heading_color"
+			   value="{{ heading_color }}"
+			   class="form-control form-control-color">
+	</div>
+</div>
+
+<div class="row mb-3">
+	<label class="col-sm-2 col-form-label">{{ entry_subheading_color }}</label>
+	<div class="col-sm-10">
+		<input type="color"
+			   name="subheading_color"
+			   value="{{ subheading_color }}"
+			   class="form-control form-control-color">
+	</div>
+</div>
+
+<div class="row mb-3 required">
+    <label for="input-entry_image_width" class="col-sm-2 col-form-label">{{ entry_image_width }}</label>
+    <div class="col-sm-10">
+        <input type="number" name="image_width" value="{{ image_width }}" placeholder="{{ entry_entry_image_width }}" id="input-entry_image_width" class="form-control"/>
+    </div>
+</div>
+
+<div class="row mb-3 required">
+    <label for="input-entry_image_height" class="col-sm-2 col-form-label">{{ entry_image_height }}</label>
+    <div class="col-sm-10">
+        <input type="number" name="image_height" value="{{ image_height }}" placeholder="{{ entry_entry_image_height }}" id="input-entry_image_height" class="form-control"/>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+    <div class="col-sm-10">
+        <select name="status" id="input-status" class="form-select">
+            {% if status %}
+                <option value="1" selected>{{ text_enabled }}</option>
+                <option value="0">{{ text_disabled }}</option>
+            {% else %}
+                <option value="1">{{ text_enabled }}</option>
+                <option value="0" selected>{{ text_disabled }}</option>
+            {% endif %}
+        </select>
+    </div>
+</div>
+
+

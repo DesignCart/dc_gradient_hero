@@ -1,0 +1,105 @@
+<style>
+	{% set dc_gradient_hero_id = 'dc-gradient-hero-' ~ module_id %}
+	
+	{% if attr_ID %}
+		{% set dc_gradient_hero_id = attr_ID %}
+	{% endif %}
+
+	#{{ dc_gradient_hero_id }} {
+		--btn-bg: {{ button_bg }};
+		--btn-bg-hover: {{ button_bg_hover }};
+		--btn-text: {{ button_text_color }};
+		--btn-text-hover: {{ button_text_color_hover }};
+
+		--heading-color: {{ heading_color }};
+		--subheading-color: {{ subheading_color }};
+	}
+
+	#{{ dc_gradient_hero_id }} h2.dc-gradient-hero__title{
+		color: var(--heading-color);
+	}
+
+	#{{ dc_gradient_hero_id }} .dc-gradient-hero__description{
+		color: var(--subheading-color);
+	}
+
+	#{{ dc_gradient_hero_id }} .dc-gradient-hero__btn{
+		color: var(--btn-text);
+		background: var(--btn-bg);
+	}
+
+	#{{ dc_gradient_hero_id }} .dc-gradient-hero__btn{
+		color: var(--btn-text-hover);
+		background: var(--btn-bg-hover);
+	}
+</style>
+
+{% if session.css %}
+    {% for css in session.css %}
+        <link href="{{ css }}" rel="stylesheet" type="text/css" />
+    {% endfor %}
+{% endif %}
+
+<div id="{{ dc_gradient_hero_id }}" class="dc-gradient-hero">
+    <canvas id="dc-gradient-hero-blending-{{ module_id }}" class="dc-gradient-hero-canvas"></canvas>
+
+	<div class="dc-gradient-hero__content">
+		{% if mod_title %}
+			<h2 class="dc-gradient-hero__title">{{ mod_title }}</h2>
+		{% endif %}
+
+		{% if mod_description %}
+			<div class="dc-gradient-hero__description">
+				{{ mod_description }}
+			</div>
+		{% endif %}
+
+		{% if mod_url and mod_anchor %}
+			<a href="{{ mod_url }}" class="btn dc-gradient-hero__btn">
+				{{ mod_anchor }}
+			</a>
+		{% endif %}
+	</div>
+</div>
+
+{% if session.js %}
+    {% for js in session.js %}
+        <script src="{{ js }}" type="text/javascript"></script>
+    {% endfor %}
+{% endif %}
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+
+		var gradients = [];
+
+		{% for g in gradients %}
+			gradients.push(['{{ g.color_a }}', '{{ g.color_b }}']);
+		{% endfor %}
+
+		if (!gradients.length) {
+			return;
+		}
+
+		var granimOptions = {
+			element: '#dc-gradient-hero-blending-{{ module_id }}',
+			direction: 'top-bottom',
+			isPausedWhenNotInView: true,
+			states: {
+				'default-state': {
+					gradients: gradients,
+					transitionSpeed: 7000
+				}
+			}
+		};
+
+		{% if image %}
+			granimOptions.image = {
+				source: '{{ image }}',
+				blendingMode: 'multiply'
+			};
+		{% endif %}
+
+		new Granim(granimOptions);
+	});
+</script>
